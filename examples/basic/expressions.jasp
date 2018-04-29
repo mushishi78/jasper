@@ -1,0 +1,36 @@
+@main()num
+	>> a 'Hello {(* 4 6)} motto'
+	>> b (+ 4.3 4 (* 5 7 67))
+	>> c (some jam sjdd true)
+	>> dB (*
+		(+
+			(-
+				0
+				(* dX sin(B) cos(L))
+				(* dY sin(L))
+			)
+			(* dZ cos(B))
+			(*
+				Da
+				(+
+					(/
+						(*
+							Rn
+							(** e 2)
+							sin(B)
+							cos(B)
+						)
+						a
+					)
+					Df
+				)			
+				(+
+					(* Rm (/ a b))
+					(* Rn ba)
+				)
+				sin(B)
+				cos(B) 
+			)
+		)
+		(** vc (- 0 1))
+	)

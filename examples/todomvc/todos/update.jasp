@@ -1,0 +1,43 @@
+@update()_
+	# Main and footer visibility
+	if (> todos:tasks.length 0)
+		do dom:removeClass(element todos:mainElement className 'hidden')
+		do dom:removeClass(element todos:footerElement className 'hidden')
+	else
+		do dom:addClass(element todos:mainElement className 'hidden')
+		do dom:addClass(element todos:footerElement className 'hidden')
+
+	# ToggleAll checkbox checked
+	do dom:setChecked(
+		element todos:toggleAllInputElement
+		checked (== todos:completedCount todos:tasks.length)
+	)
+	
+	# Items left count
+	>> left (- todos:tasks.length todos:completedCount)
+	do dom:setText(
+		element todos:leftCountElement
+		text '{left} items left'
+	)
+
+	# ClearCompleted button visibility
+	if (> todos:completedCount 0)
+		do dom:removeClass(element todos:mainElement className 'hidden')
+	else
+		do dom:addClass(element todos:mainElement className 'hidden')
+
+	# Apply the filter
+	loop todos:tasks task		 
+		check exhaustion todos:Filter none completed notCompleted
+
+		if (some
+			(all todos:filter.none (none task.visible))
+			(all todos:filter.completed (== task.completed task.visible))
+			(all todos:filter.notCompleted (!= tasks.completed task.visible))
+		)
+			if task.visible
+				do dom:removeClass(element task.liElement className 'hidden')
+			else
+				do dom:addClass(element task.liElement className 'hidden')
+
+			>> task.visible (none task.visible)

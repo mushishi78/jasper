@@ -1,0 +1,32 @@
+:inputElement dom:Element
+	<< dom:elementGet(id 'input')
+
+:mainElement dom:Element
+	<< dom:elementGet(id 'main')
+
+:toggleAllInputElement dom:Element
+	<< dom:elementGet(id 'toggleAllInput')
+
+:toggleAllLabelElement dom:Element
+	<< dom:elementGet(id 'toggleAllLabel')
+
+:listElement dom:Element
+	<< dom:elementGet(id 'list')
+
+:footerElement dom:Element
+	<< dom:elementGet(id 'footer')
+
+:leftCountElement dom:Element
+	<< dom:elementGet(id 'leftCount')
+
+:filterAllElement dom:Element
+	<< dom:elementGet(id 'filterAll')
+
+:filterActiveElement dom:Element
+	<< dom:elementGet(id 'filterActive')
+
+:filterCompletedElement dom:Element
+	<< dom:elementGet(id 'filterCompleted')
+
+:clearCompletedElement dom:Element
+	<< dom:elementGet(id 'clearCompleted')

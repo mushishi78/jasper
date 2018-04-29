@@ -1,0 +1,44 @@
+@onload()_
+	# Attach global event handlers
+	do dom:elementOn(
+		element todos:inputElement
+		eventName event:keyPress
+		handler todos:inputOnKeyPress
+		context _
+	)
+	do dom:elementOn(
+		element todos:inputElement
+		eventName event:blur
+		handler todos:inputOnBlur
+		context _
+	)
+	do dom:elementOn(
+		element todos:toggleAllLabelElement
+		eventName event:click
+		handler todos:toggleAllOnClick
+		context _
+	)
+	do dom:elementOn(
+		element todos:filterAllElement
+		eventName event:click
+		handler todos:filterAllOnClick
+		context _
+	)
+	do dom:elementOn(
+		element todos:filterActiveElement
+		eventName event:click
+		handler todos:filterActiveOnClick
+		context _
+	)
+	do dom:elementOn(
+		element todos:filterCompletedElement
+		eventName event:click
+		handler todos:filterCompletedOnClick
+		context _
+	)
+	do dom:elementOn(
+		element todos:clearCompletedElement
+		eventName event:click
+		handler todos:clearCompletedOnClick
+		context _
+	)

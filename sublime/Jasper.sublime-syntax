@@ -1,0 +1,280 @@
+%YAML 1.2
+---
+name: Jasper
+file_extensions: [jasp]
+scope: source.jasp
+variables:
+  name: \w+
+  namespace: '\w+\:'
+  objects: \w+\.
+  type:
+    '(?x)
+      (?<type> \g<array> | \g<dictionary> | \g<identifier> )
+      (?<array> \[ \g<type> \? \] ){0}
+      (?<dictionary> \{ \g<type> \? \} ){0}
+      (?<identifier> ({{namespace}})?({{objects}})*({{name}}) \?? ){0}
+    (?-x)'
+
+## References
+## https://github.com/sublimehq/Packages/issues/757
+
+contexts:
+  main:
+    - include: comments
+
+    - include: function_definition
+    - include: type_definition
+    - include: ffi_definition
+    - include: singletons
+
+    - include: function_statement
+    - include: conditional_branches
+    - include: control_flow
+    - include: loops
+    - include: assignment
+
+  comments:
+    - match: '^\s*(?=#)'
+      push:
+        - match: '#'
+          scope: comment.line.jasp
+          set:
+            - meta_scope: comment.line.jasp
+            - match: '(?=\n)'
+              pop: true
+
+## Top level
+##############################################################
+
+  function_definition:
+    - match: '^(@{{name}})(\()'
+      captures:
+        1: entity.name.function
+        2: punctuation.definition.begin
+      push:
+        - include: comments
+        - match: '({{name}}) {{type}}'
+          captures:
+            1: variable.parameter
+            2: storage.type
+        - match: '(\)){{type}}$'
+          captures:
+            1: punctuation.definition.end
+            2: storage.type
+          pop: true
+
+  type_definition:
+    - match: '^(\.{{name}}) (&|\|)$'
+      captures:
+        1: entity.name.class
+        2: punctuation.separator
+      push:
+        - include: comments
+        - match: '^\t({{name}}) {{type}}(?=\n)'
+          captures:
+            1: variable.parameter
+            2: storage.type
+        - match: ^(?!\t)
+          pop: true
+    - match: '^(\.{{name}}) {{type}}(?=\n)'
+      captures:
+        1: entity.name.class
+        2: storage.type
+
+  ffi_definition:
+    - match: '^(ffi) ({{name}})(\()'
+      captures:
+        1: keyword.declaration
+        2: entity.name.function
+        3: punctuation.definition.begin
+      set:
+        - include: comments
+        - match: '({{name}}) {{type}}'
+          captures:
+            1: variable.parameter
+            2: storage.type
+        - match: '(\)){{type}} (>>>)(?=\n)'
+          captures:
+            1: punctuation.definition.end
+            2: storage.type
+            3: punctuation.definition.begin
+          push: Packages/JavaScript/JavaScript.sublime-syntax
+          with_prototype:
+            - match: '<<<'
+              scope: punctuation.definition.end
+              set: main
+  singletons:
+    - match: '^(:{{name}}) {{type}}(?=\n)'
+      captures:
+        1: entity.name.function
+        2: storage.type
+
+## Statements
+##############################################################
+
+  function_statement:
+    - match: '^\t+(do) ({{namespace}})?({{objects}})*({{name}})(\()'
+      captures:
+        1: keyword.control.flow
+        2: entity.name.namespace
+        3: variable.other
+        4: entity.name.function
+        5: punctuation.separator
+      push:
+        - include: comments
+        - match: '({{name}}) '
+          captures:
+            1: variable.parameter
+          push: expression
+        - match: '\)'
+          scope: punctuation.definition.end
+          pop: true
+
+  conditional_branches:
+    - match: '^\t+(if|elif) '
+      scope: keyword.control.conditional
+      push: expression
+    - match: '^\t+else$'
+      scope: keyword.control.conditional
+
+  control_flow:
+    - match: '^\t+(break|continue)$'
+      scope: keyword.control.flow
+    - match: '^\t+<<$'
+      scope: keyword.control.flow
+    - match: '^\t+<< '
+      scope: keyword.control.flow
+      push: expression
+
+  loops:
+    - match: '^\t+(loop) (\d+)\s({{name}})'
+      captures:
+        1: keyword.control.conditional
+        2: constant.numeric.integer
+        3: variable.parameter
+    - match: '^\t+(loop) (\d+)'
+      captures:
+        1: keyword.control.conditional
+        2: constant.numeric.integer
+    - match: '^\t+(loop) ({{namespace}})?({{objects}})*({{name}}) ({{name}}) ({{name}})'
+      captures:
+        1: keyword.control.conditional
+        2: entity.name.namespace
+        3: variable.other
+        4: variable
+        5: variable.parameter
+        6: variable.parameter
+    - match: '^\t+(loop) ({{namespace}})?({{objects}})*({{name}}) ({{name}})'
+      captures:
+        1: keyword.control.conditional
+        2: entity.name.namespace
+        3: variable.other
+        4: variable
+        5: variable.parameter
+
+  assignment:
+    - match: '^\t+(>>) ({{namespace}})?({{objects}})*({{name}}) '
+      captures:
+        1: keyword.operator.assignment
+        2: entity.name.namespace
+        3: variable.other
+        4: variable
+      push: expression
+
+
+## Expressions
+##############################################################
+
+  expression:
+    - include: s_expressions
+    - include: function_invocation
+    - include: string
+    - include: number
+    - include: boolean
+    - include: void
+    - include: identifier
+
+  s_expressions:
+    - match: '(\()(_|some|all|none|==|!=|>=|>|<=|<)(?=\s)'
+      captures:
+        1: punctuation.begin
+        2: keyword.operator.logical
+      set:
+        - match: \s+
+          push: expression
+        - match: \)
+          scope: punctuation.end
+          pop: true
+    - match: '(\()(/|\*\*|\*|\+|\%|-)(?=\s)'
+      captures:
+        1: punctuation.begin
+        2: keyword.operator.arithmetic
+      set:
+        - match: \s+
+          push: expression
+        - match: \)
+          scope: punctuation.end
+          pop: true
+
+  function_invocation:
+    - match: '({{namespace}})?({{objects}})*({{name}})(\()'
+      captures:
+        1: entity.name.namespace
+        2: variable.other
+        3: entity.name.function
+        4: punctuation.separator
+      set:
+        - include: comments
+        - match: '({{name}}) '
+          captures:
+            1: variable.parameter
+          push: expression
+        - match: '\)'
+          scope: punctuation.definition.end
+          pop: true
+
+  string:
+    - match: \'
+      scope: punctuation.definition.string.begin
+      set:
+        - meta_scope: string.quoted.double
+        - match: \\[\'\\{}]
+          scope: constant.character.escape
+        - match: \{
+          scope: punctuation.separator.begin
+          push:
+            - match: (?!\})
+              set: expression
+            - match: \}
+              scope: punctuation.separator.end
+              pop: true
+        - match: \'
+          scope: punctuation.definition.string.end
+          pop: true
+
+  number:
+    - match: '\d+\.\d+'
+      scope: constant.numeric.float
+      pop: true
+    - match: '\d+'
+      scope: constant.numeric.integer
+      pop: true
+
+  boolean:
+    - match: '(true|false)'
+      scope: constant.lanuage
+      pop: true
+
+  void:
+    - match: '_'
+      scope: constant.lanuage
+      pop: true
+
+  identifier:
+    - match: '({{namespace}})?({{objects}})*({{name}})'
+      captures:
+        1: entity.name.namespace
+        2: variable.other
+        3: variable
+      pop: true
+

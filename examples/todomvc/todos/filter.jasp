@@ -1,0 +1,7 @@
+.Filter |
+	none bool
+	completed bool
+	notCompleted bool
+
+:filter todos:Filter
+	<< todos:Filter(none true)

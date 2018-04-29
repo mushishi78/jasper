@@ -1,0 +1,70 @@
+# SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
+
+# This is a comment
+# <- comment.line
+# ^^^^^^^^^^^^^^^^^ comment.line
+
+@fib(n num)num
+# <- entity.name.function
+# ^^ entity.name.function
+#   ^ punctuation.definition.begin
+
+    if n = 0 or n = -1
+        << 0
+    if n = 1
+        << 1
+    << n + fib(n (n - 1)) + fib(n (n - 2))
+
+@onload()_
+    do log(msg 'Initializing store {fib(n 12)}')
+    store = Store(loading true)
+
+    james = 6
+
+    do log(msg 'Render react nodes {james * 8}')
+
+    store = Store(
+        success StoreSuccess(
+            user User(name 'Harry')
+            location Location(locationId 46)
+        )
+    )
+
+    do React.render(
+        root getElement(id 'react-root')
+        nodes App(
+            props AppProps(store store)
+            children _
+        )
+    )
+
+
+.Store |
+    loading bool
+    failed Error
+    success StoreSuccess
+
+.StoreSuccess &
+    user User
+    location Location
+
+ffi getElement(id str)HTMLElement >>>
+    if (id == null) return undefined;
+    return window.document.getElementById(id);
+<<<
+
+.DropId num
+
+@drop(ids []DropId hassle bool)_
+    << 6
+    loop ids id i
+        do log(msg id)
+    loop 10 i
+        if hassle
+            do log(msg i)
+
+
+@setPace(paces {DropId}bool id DropId pace bool){DropId}bool
+    << dict.set(paces paces id id pace pace)
+
+

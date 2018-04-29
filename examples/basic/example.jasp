@@ -1,0 +1,64 @@
+# This is a comment
+
+@fib(n num)num
+	if (some (== n 0) (== n -1))
+		<< 0
+	if (== n 1)
+		<< 1
+	<< (+
+		n
+		fib(n (- n 1))
+		fib(n (- n 2))
+	)
+
+@onload()_
+	do log:info(msg 'Initializing store {fib(n 12)}')
+	>> store basic:Store(loading true)
+
+	>> james 6
+
+	do log:info(msg 'Render react nodes {(* james 8)}')
+
+	>> store basic:Store(
+		success basic:StoreSuccess(
+			user basic:User(name 'Harry')
+			location basic:Location(locationId 46)
+		)
+	)
+
+	do React:render(
+		root basic:getElement(id 'react-root')
+		nodes basic:App(
+			props basic:AppProps(store store)
+			children _
+		)
+	)
+
+.Store |
+	loading bool
+	failed Error
+	success basic:StoreSuccess
+
+.StoreSuccess &
+	user basic:User
+	location basic:Location
+
+ffi getElement(id str)dom:HTMLElement >>>
+	if (id == null) return undefined;
+	return document.getElementById(id);
+<<<
+
+.DropId num
+
+@drop(ids [basic:DropId?] hassle bool)_
+	loop ids id i
+		do log:info(msg id)
+	loop 10 i
+		if hassle
+			do log:info(msg i)
+
+@setPace(paces {bool?} id basic:DropId pace bool){bool?}
+	<< dict:set(paces paces id id pace pace)
+
+:largPrim num
+	<< (* 19 849 2029)

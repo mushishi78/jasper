@@ -1,0 +1,50 @@
+@new()_
+	# Take the description from the input
+	>> description dom:getValue(element todos:inputElement)
+	if (== '' description)
+		<<
+
+	# Clear out the input element
+	do dom:setValue(element todos:inputElement value '')
+
+	# Add the new todo item's elements
+	>> liElement dom:create(tag dom:liTag)
+	>> viewElement dom:create(tag dom:divTag)
+	>> toggleElement dom:create(tag dom:inputTag)
+	>> labelElement dom:create(tag dom:labelTag)
+	>> buttonElement dom:create(tag dom:buttonTag)
+	do dom:addClass(element viewElement class 'view')
+	do dom:addClass(element toggleElement class 'toggle')
+	do dom:setType(element toggleElement type dom:checkboxType)
+	do dom:setText(element labelElement text description)
+	do dom:addClass(element buttonElement class 'destroy')
+	do dom:appendChild(parent viewElement child toggleElement)
+	do dom:appendChild(parent viewElement child labelElement)
+	do dom:appendChild(parent viewElement child buttonElement)
+	do dom:appendChild(parent liElement child viewElement)
+	do dom:appendChild(parent todos:listElement child liElement)
+
+	# Create a todo item 
+	>> task todos:Task(
+		completed false
+		visible true
+		liElement liElement
+		toggleElement toggleElement
+	)
+
+	# Update the singleton tasks array
+	do array:push(array todos:tasks member task)
+
+	# Add event handlers
+	do dom:elementOn(
+		element toggleElement
+		eventName dom:clickEvent
+		handler todos:toggleOnClick
+		context dom:ElementEventContext(task task)
+	)
+	do dom:elementOn(
+		element buttonElement
+		eventName dom:clickEvent
+		handler todos:destroyOnClick
+		context dom:ElementEventContext(task task)
+	)

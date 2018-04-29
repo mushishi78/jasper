@@ -1,0 +1,24 @@
+.Element _
+
+.ElementEventContext |
+	task todos.Task
+
+.ElementEventHandler @(event event:Event context dom:ElementEventContext)_
+
+ffi elementGet(id str)dom:Element >>>
+	return document.getElementById(id)
+<<<
+
+ffi elementOn(
+	element dom:Element
+	eventName dom:EventName
+	eventHandler dom:ElementEventHandler
+	context dom:ElementEventContext
+)_ >>>
+	element.addEventListener(
+		dom.eventNameToString(eventName),
+		function(event) {
+			handler(event, context)
+		}
+	)
+<<<
