@@ -1,6 +1,6 @@
 @inputOnKeyPress(event event:Event)_
 	if (!= event.key 'Enter')
-		<<
+		<< _
 	do todos:new()
 	do todos:update()
 
