@@ -1,0 +1,3 @@
+[builds.main]
+entry = ["window:onLoad"]
+output = "public/index.js"
