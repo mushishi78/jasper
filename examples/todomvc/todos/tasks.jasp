@@ -1,11 +1,11 @@
-.Task &
-	completed bool
-	visible bool
-	liElement dom:Element
-	toggleElement dom:Element
+:Task:
+    completed bool
+    visible bool
+    liElement dom:Element
+    toggleElement dom:Element
 
-:tasks [todos:Task?]
-	<< []
+#> tasks [todos:Task]
+    << [todos:Task]()
 
-:completedCount num
-	<< 0
+#> completedCount num
+    << 0

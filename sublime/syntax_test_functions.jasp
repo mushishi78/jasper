@@ -1,0 +1,26 @@
+> SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
+
+/> aFunction () num
+> <- punctuation.definition.keyword
+ > <- punctuation.definition.keyword
+>  ^^^^^^^^^ entity.name.function
+>            ^ punctuation.definition.begin
+>             ^ punctuation.definition.end
+>               ^^^ storage.type
+    < 45
+
+/> b (age num) _
+>    ^ punctuation.definition.begin
+>     ^^^ variable.parameter
+>         ^^^ storage.type
+>            ^ punctuation.definition.end
+    . std:log(s num)
+
+/> c (forename str lastname str) str
+>    ^ punctuation.definition.begin
+>     ^^^^^^^^ variable.parameter
+>              ^^^ storage.type
+>                  ^^^^^^^^ variable.parameter
+>                           ^^^ storage.type
+>                              ^ punctuation.definition.end
+	< '{forename} {lastname}'

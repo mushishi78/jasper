@@ -7,12 +7,13 @@ variables:
   name: \w+
   namespace: '\w+\:'
   objects: \w+\.
+  identifier: '{{namespace}})?({{objects}})*({{name}})\??'
   type:
     '(?x)
       (?<type> \g<array> | \g<dictionary> | \g<identifier> )
-      (?<array> \[ \g<type> \? \] ){0}
-      (?<dictionary> \{ \g<type> \? \} ){0}
-      (?<identifier> ({{namespace}})?({{objects}})*({{name}}) \?? ){0}
+      (?<array> \[ \g<type> \?? \] ){0}
+      (?<dictionary> \{ \g<type> \?? \} ){0}
+      (?<identifier> ({{identifier}}){0}
     (?-x)'
 
 ## References
@@ -34,9 +35,9 @@ contexts:
     - include: assignment
 
   comments:
-    - match: '^\s*(?=#)'
+    - match: '^\s*(?=> )'
       push:
-        - match: '#'
+        - match: '> '
           scope: comment.line.jasp
           set:
             - meta_scope: comment.line.jasp
@@ -47,17 +48,18 @@ contexts:
 ##############################################################
 
   function_definition:
-    - match: '^(@{{name}})(\()'
+    - match: '^(/>)\s+({{name}})\s+(\()'
       captures:
-        1: entity.name.function
-        2: punctuation.definition.begin
+        1: punctuation.definition.keyword
+        2: entity.name.function
+        3: punctuation.definition.begin
       push:
         - include: comments
-        - match: '({{name}}) {{type}}'
+        - match: '({{name}})\s+({{type}})'
           captures:
             1: variable.parameter
             2: storage.type
-        - match: '(\)){{type}}$'
+        - match: '(\))\s+({{type}})'
           captures:
             1: punctuation.definition.end
             2: storage.type

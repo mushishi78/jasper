@@ -1,64 +1,78 @@
-# This is a comment
+> This is a comment
 
-@fib(n num)num
-	if (some (== n 0) (== n -1))
-		<< 0
-	if (== n 1)
-		<< 1
-	<< (+
-		n
-		fib(n (- n 1))
-		fib(n (- n 2))
-	)
+/> fib (n num) num
+    ? [- [== n 0] [== n -1]]
+        < 0
+    ? [== n 1]
+        < 1
+    < {+
+        n
+        fib(n {- n 1})
+        fib(n {- n 2})
+    }
 
-@onload()_
-	do log:info(msg 'Initializing store {fib(n 12)}')
-	>> store basic:Store(loading true)
+/> onload () _
+    . log:info(msg 'Initializing store {fib(n 12)}')
+    = store basic:Store(loading true)
 
-	>> james 6
+    = james 6
 
-	do log:info(msg 'Render react nodes {(* james 8)}')
+    . log:info(msg 'Render react nodes {{* james 8}}')
 
-	>> store basic:Store(
-		success basic:StoreSuccess(
-			user basic:User(name 'Harry')
-			location basic:Location(locationId 46)
-		)
-	)
+    = store basic:Store(
+        success basic:StoreSuccess(
+            user basic:User(name 'Harry')
+            location basic:Location(locationId 46)
+        )
+    )
 
-	do React:render(
-		root basic:getElement(id 'react-root')
-		nodes basic:App(
-			props basic:AppProps(store store)
-			children _
-		)
-	)
+    . React:render(
+        root basic:getElement(id 'react-root')
+        nodes basic:App(
+            props basic:AppProps(store store)
+            children _
+        )
+    )
 
-.Store |
-	loading bool
-	failed Error
-	success basic:StoreSuccess
+~Store~
+    loading bool
+    failed Error
+    success basic:StoreSuccess
 
-.StoreSuccess &
-	user basic:User
-	location basic:Location
+:StoreSuccess:
+    user basic:User
+    location basic:Location
 
-ffi getElement(id str)dom:HTMLElement >>>
-	if (id == null) return undefined;
-	return document.getElementById(id);
+>>> getElement (id str) dom:HTMLElement
+<<<
+    if (id == null) return undefined;
+    return document.getElementById(id);
 <<<
 
-.DropId num
+.DropId. num
 
-@drop(ids [basic:DropId?] hassle bool)_
-	loop ids id i
-		do log:info(msg id)
-	loop 10 i
-		if hassle
-			do log:info(msg i)
+/> drop (ids [basic:DropId] hassle bool) _
+    @ ids id i
+        . log:info(msg id)
+    @ 10 i
+        ? hassle
+            . log:info(msg i)
 
-@setPace(paces {bool?} id basic:DropId pace bool){bool?}
-	<< dict:set(paces paces id id pace pace)
+/> setPace (paces {bool} id basic:DropId pace bool) {bool}
+    < dict:set(paces paces id id pace pace)
 
-:largPrim num
-	<< (* 19 849 2029)
+#> largPrim num
+    < (* 19 849 2029)
+
+#> myArray [num]
+    = a [num](1 2 48 3 92 03 3 4 2 1 2 3 405 392 203 40)
+    @ a n i
+        = a[i] {* n 44}
+    < a
+
+/> shift (array [`T] member `T) [`T]
+    = a [`T](member)
+    @ array m2 i
+        = i2 {+ i 1}
+        = a[i2] m2
+    < a

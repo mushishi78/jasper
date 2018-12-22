@@ -1,57 +1,57 @@
-@inputOnKeyPress(event event:Event)_
-	if (!= event.key 'Enter')
-		<< _
-	do todos:new()
-	do todos:update()
+/> inputOnKeyPress (event event:Event) _
+    ? [!= event.key 'Enter']
+        << _
+    . todos:new()
+    . todos:update()
 
-@inputOnBlur()_
-	do todos:new()
-	do todos:update()
+/> inputOnBlur () _
+    . todos:new()
+    . todos:update()
 
-@toggleAllOnClick()_
-	>> completed (!= todos:completedCount todos:tasks.length)
-	loop todos:tasks task
-		if (!= task.completed completed)
-			do todos:taskToggle(task task)
-	do todos:update()
+/> toggleAllOnClick () _
+    = completed [!= todos:completedCount todos:tasks.length]
+    @ todos:tasks task
+        ? [!= task.completed completed]
+            . todos:taskToggle(task task)
+    . todos:update()
 
-@toggleOnClick(context dom:ElementEventContext)_
-	do todos:taskToggle(task context.task)
-	do todos:update()
+/> toggleOnClick (task todos:Task) _
+    . todos:taskToggle(task task)
+    . todos:update()
 
-@destroyOnClick(context dom:ElementEventContext)_
-	do array.remove(array todos:tasks member context.task)
-	do dom:remove(element context.task.liElement)
-	if context.task.completed
-		>> todos:completedCount (- todos:completedCount 1)
-	do todos:update()
+/> destroyOnClick (task todos:Task) _
+    . array:remove(array todos:tasks member task)
+    . dom:remove(element task.liElement)
+    ? task.completed
+        = todos:completedCount {- todos:completedCount 1}
+    . todos:update()
 
-@filterAllOnClick()_
-	do dom:addClass(element todos:filterAllElement class 'selected')
-	do dom:removeClass(element todos:filterActiveElement class 'selected')
-	do dom:removeClass(element todos:filterCompletedElement class 'selected')
-	>> todos:filter todos:Filter(none true)
-	do todos:update()
+/> filterAllOnClick () _
+    . dom:addClass(element todos:filterAllElement class %selected)
+    . dom:removeClass(element todos:filterActiveElement class %selected)
+    . dom:removeClass(element todos:filterCompletedElement class %selected)
+    = todos:filter todos:Filter(none true)
+    . todos:update()
 
-@filterActiveOnClick()_
-	do dom:removeClass(element todos:filterAllElement class 'selected')
-	do dom:addClass(element todos:filterActiveElement class 'selected')
-	do dom:removeClass(element todos:filterCompletedElement class 'selected')
-	>> todos:filter todos:Filter(completed true)
-	do todos:update()
+/> filterActiveOnClick () _
+    . dom:removeClass(element todos:filterAllElement class %selected)
+    . dom:addClass(element todos:filterActiveElement class %selected)
+    . dom:removeClass(element todos:filterCompletedElement class %selected)
+    = todos:filter todos:Filter(completed true)
+    . todos:update()
 
-@filterCompletedOnClick()_
-	do dom:removeClass(element todos:filterAllElement class 'selected')
-	do dom:removeClass(element todos:filterActiveElement class 'selected')
-	do dom:addClass(element todos:filterCompletedElement class 'selected')
-	>> todos:filter todos:Filter(notCompleted true)
-	do todos:update()
+/> filterCompletedOnClick () _
+    . dom:removeClass(element todos:filterAllElement class %selected)
+    . dom:removeClass(element todos:filterActiveElement class %selected)
+    . dom:addClass(element todos:filterCompletedElement class %selected)
+    = todos:filter todos:Filter(notCompleted true)
+    . todos:update()
 
-@clearCompletedOnClick()_
-	loop todos:tasks task
-		if (none task.completed)
-			continue
-		do array.remove(array todos:tasks member todo)
-		do dom:remove(element task.liElement)
-		>> todos:completedCount (- todos:completedCount 1)
-	do todos:update()
+/> clearCompletedOnClick () _
+    @ todos:tasks task
+        ? [! task.completed]
+            @^
+        . array.remove(array todos:tasks member todo)
+        . dom:remove(element task.liElement)
+        = todos:completedCount {- todos:completedCount 1}
+    . todos:update()

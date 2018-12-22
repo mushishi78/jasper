@@ -1,50 +1,58 @@
-@new()_
-	# Take the description from the input
-	>> description dom:getValue(element todos:inputElement)
-	if (== '' description)
-		<< _
+/> new () _
+    > Take the description from the input
+    = description dom:getValue(element todos:inputElement)
+    ? [== '' description]
+        < _
 
-	# Clear out the input element
-	do dom:setValue(element todos:inputElement value '')
+    > Clear out the input element
+    . dom:setValue(element todos:inputElement value '')
 
-	# Add the new todo item's elements
-	>> liElement dom:create(tag dom:liTag)
-	>> viewElement dom:create(tag dom:divTag)
-	>> toggleElement dom:create(tag dom:inputTag)
-	>> labelElement dom:create(tag dom:labelTag)
-	>> buttonElement dom:create(tag dom:buttonTag)
-	do dom:addClass(element viewElement class 'view')
-	do dom:addClass(element toggleElement class 'toggle')
-	do dom:setType(element toggleElement type dom:checkboxType)
-	do dom:setText(element labelElement text description)
-	do dom:addClass(element buttonElement class 'destroy')
-	do dom:appendChild(parent viewElement child toggleElement)
-	do dom:appendChild(parent viewElement child labelElement)
-	do dom:appendChild(parent viewElement child buttonElement)
-	do dom:appendChild(parent liElement child viewElement)
-	do dom:appendChild(parent todos:listElement child liElement)
+    > Add the new todo item's elements
+    = liElement dom:create(tag dom:liTag)
+    = viewElement dom:create(tag dom:divTag)
+    = toggleElement dom:create(tag dom:inputTag)
+    = labelElement dom:create(tag dom:labelTag)
+    = buttonElement dom:create(tag dom:buttonTag)
+    . dom:addClass(element viewElement class %view)
+    . dom:addClass(element toggleElement class %toggle)
+    . dom:setType(element toggleElement type dom:checkboxType)
+    . dom:setText(element labelElement text description)
+    . dom:addClass(element buttonElement class %destroy)
+    . dom:appendChild(parent viewElement child toggleElement)
+    . dom:appendChild(parent viewElement child labelElement)
+    . dom:appendChild(parent viewElement child buttonElement)
+    . dom:appendChild(parent liElement child viewElement)
+    . dom:appendChild(parent todos:listElement child liElement)
 
-	# Create a todo item 
-	>> task todos:Task(
-		completed false
-		visible true
-		liElement liElement
-		toggleElement toggleElement
-	)
+    > Create a todo item 
+    = task todos:Task(
+        completed false
+        visible true
+        liElement liElement
+        toggleElement toggleElement
+    )
 
-	# Update the singleton tasks array
-	do array:push(array todos:tasks member task)
+    > Update the singleton tasks array
+    . array:push(array todos:tasks member task)
 
-	# Add event handlers
-	do dom:elementOn(
-		element toggleElement
-		eventName dom:clickEvent
-		handler todos:toggleOnClick
-		context dom:ElementEventContext(task task)
-	)
-	do dom:elementOn(
-		element buttonElement
-		eventName dom:clickEvent
-		handler todos:destroyOnClick
-		context dom:ElementEventContext(task task)
-	)
+    > Add event handlers
+    . dom:elementOn(
+        element toggleElement
+        eventName dom:clickEvent
+        handler <toggleEvent>
+    )
+    . dom:elementOn(
+        element buttonElement
+        eventName dom:clickEvent
+        handler <destroyEvent>
+    )
+
+  % toggleEvent
+    . todos:toggleOnClick(task task)
+
+  % destroyEvent
+    . todos:destroyOnClick(task task)
+
+  % toggleEvent destroyEvent
+    . console:log('All done!')
+

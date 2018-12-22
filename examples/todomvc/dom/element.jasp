@@ -1,24 +1,34 @@
-.Element _
+.Element. _
 
-.ElementEventContext |
-	task todos.Task
-
-.ElementEventHandler @(event event:Event context dom:ElementEventContext)_
-
-ffi elementGet(id str)dom:Element >>>
-	return document.getElementById(id)
+>>> elementGet (id str) dom:Element
+<<<
+    return document.getElementById(id)
 <<<
 
-ffi elementOn(
-	element dom:Element
-	eventName dom:EventName
-	eventHandler dom:ElementEventHandler
-	context dom:ElementEventContext
-)_ >>>
-	element.addEventListener(
-		dom.eventNameToString(eventName),
-		function(event) {
-			handler(event, context)
-		}
-	)
+>>> elementOn
+(
+    element dom:Element
+    eventName dom:EventName
+    handler <event:Event>
+) _
 <<<
+    element.addEventListener(
+        dom.eventNameToString(eventName),
+        handler
+    )
+<<<
+
+>>> addClass (element dom:Element class dom:Class) _
+<<<
+    element.classList.add(class)
+>>>
+
+>>> removeClass (element dom:Element class dom:Class) _
+<<<
+    element.classList.remove(class)
+>>>
+
+>>> setChecked (element dom:Element checked bool) _
+<<<
+    element.checked = checked;
+>>>

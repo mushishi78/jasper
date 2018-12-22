@@ -1,7 +1,7 @@
-.Filter |
-	none bool
-	completed bool
-	notCompleted bool
+%Filter%
+    %none
+    %completed
+    %notCompleted
 
-:filter todos:Filter
-	<< todos:Filter(none true)
+#> filter todos:Filter
+    < %none

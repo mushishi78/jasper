@@ -1,23 +1,6 @@
-.Event _
+.Event. _
 
-.EventName |
-	blur bool
-	click bool
-	keyPress bool
-
-:blur dom:EventName
-	<< dom:EventName(blur true)
-
-:click dom:EventName
-	<< dom:EventName(click true)
-
-:keyPress dom:EventName
-	<< dom:EventName(keyPress true)
-
-@eventNameToString(eventName dom:EventName)str
-	if eventName.blur
-		<< 'blur'
-	if eventName.click
-		<< 'click'
-	if eventName.keyPress
-		<< 'keyPress'
+%EventName%
+    %blur
+    %click
+    %keyPress

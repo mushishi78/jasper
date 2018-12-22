@@ -1,16 +1,16 @@
-@toggle(task todos:Task)_
-	>> completed (f task.completed)
+/> toggle (task todos:Task) _
+    = completed [! task.completed]
 
-	# Update the list elements
-	if completed
-		do dom:addClass(element task.liElement class 'completed')
-	else
-		do dom:removeClass(element task.liElement class 'completed')
-	do dom:setChecked(element task.toggleElement checked completed)
-	>> task.completed completed
+    > Update the list elements
+    ? completed
+        . dom:addClass(element task.liElement class %completed)
+    :
+        . dom:removeClass(element task.liElement class %completed)
+    . dom:setChecked(element task.toggleElement checked completed)
+    = task.completed completed
 
-	# Update the count
-	if completed
-		>> todos:completedCount (+ todos:completedCount 1)
-	else
-		>> todos:completedCount (+ todos:completedCount 1)
+    > Update the count
+    ? completed
+        = todos:completedCount {+ todos:completedCount 1}
+    :
+        = todos:completedCount {- todos:completedCount 1}
