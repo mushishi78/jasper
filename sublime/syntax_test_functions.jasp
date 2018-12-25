@@ -14,6 +14,7 @@
 >     ^^^ variable.parameter
 >         ^^^ storage.type
 >            ^ punctuation.definition.end
+>              ^ storage.type
     . std:log(s num)
 
 /> c (forename str lastname str) str

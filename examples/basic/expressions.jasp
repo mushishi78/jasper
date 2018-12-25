@@ -1,7 +1,7 @@
 /> main () num
     = a 'Hello {{* 4 6}} motto'
     = b {+ 4.3 4 {* 5 7 67}}
-    = c [- jam sjdd true]
+    = c [~ jam sjdd true]
     = dB {*
         {+
             {-

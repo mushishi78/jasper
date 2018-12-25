@@ -37,9 +37,9 @@
 ) num
 <<<
 	return 5
->>>
+<<<
 
-:d:
+&> d
     > Type definition comment
 >   ^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
     i num

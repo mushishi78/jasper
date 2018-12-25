@@ -1,4 +1,4 @@
-.Element. _
+@> Element _
 
 >>> elementGet (id str) dom:Element
 <<<
@@ -12,23 +12,20 @@
     handler <event:Event>
 ) _
 <<<
-    element.addEventListener(
-        dom.eventNameToString(eventName),
-        handler
-    )
+    element.addEventListener(eventName, handler)
 <<<
 
 >>> addClass (element dom:Element class dom:Class) _
 <<<
     element.classList.add(class)
->>>
+<<<
 
 >>> removeClass (element dom:Element class dom:Class) _
 <<<
     element.classList.remove(class)
->>>
+<<<
 
 >>> setChecked (element dom:Element checked bool) _
 <<<
     element.checked = checked;
->>>
+<<<

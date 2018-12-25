@@ -8,11 +8,13 @@ variables:
   namespace: '\w+\:'
   objects: \w+\.
   identifier: '{{namespace}})?({{objects}})*({{name}})\??'
+  indent: '    '
   type:
     '(?x)
-      (?<type> \g<array> | \g<dictionary> | \g<identifier> )
-      (?<array> \[ \g<type> \?? \] ){0}
-      (?<dictionary> \{ \g<type> \?? \} ){0}
+      (?<type> \g<array> | \g<dictionary> | \g<callback> | \g<identifier> )
+      (?<array> \[ \g<type> \] ){0}
+      (?<dictionary> \{ \g<type> \} ){0}
+      (?<callback> < \g<type> > ){0}
       (?<identifier> ({{identifier}}){0}
     (?-x)'
 
@@ -66,45 +68,61 @@ contexts:
           pop: true
 
   type_definition:
-    - match: '^(\.{{name}}) (&|\|)$'
+    - match: '^([\|&]>)\s+({{name}})'
       captures:
-        1: entity.name.class
-        2: punctuation.separator
+        1: punctuation.definition.keyword
+        2: entity.name.function.constructor
       push:
         - include: comments
-        - match: '^\t({{name}}) {{type}}(?=\n)'
+        - match: '^{{indent}}({{name}})\s+({{type}})'
           captures:
             1: variable.parameter
             2: storage.type
-        - match: ^(?!\t)
+        - match: ^(?!{{indent}})
           pop: true
-    - match: '^(\.{{name}}) {{type}}(?=\n)'
+    - match: '^(@>)\s+({{name}})\s+({{type}})'
       captures:
-        1: entity.name.class
-        2: storage.type
+        1: punctuation.definition.keyword
+        2: entity.name.function.constructor
+        3: storage.type
 
   ffi_definition:
-    - match: '^(ffi) ({{name}})(\()'
+    - match: '^(>>>)\s+'
       captures:
-        1: keyword.declaration
-        2: entity.name.function
-        3: punctuation.definition.begin
+        1: punctuation.definition.keyword
       set:
         - include: comments
-        - match: '({{name}}) {{type}}'
+        - match: '\s*({{name}})\s+'
           captures:
-            1: variable.parameter
-            2: storage.type
-        - match: '(\)){{type}} (>>>)(?=\n)'
-          captures:
-            1: punctuation.definition.end
-            2: storage.type
-            3: punctuation.definition.begin
-          push: Packages/JavaScript/JavaScript.sublime-syntax
-          with_prototype:
-            - match: '<<<'
-              scope: punctuation.definition.end
-              set: main
+            1: entity.name.function
+          set:
+            - include: comments
+            - match: '(\()\s*'
+              captures:
+                1: punctuation.definition.begin
+              set:
+                - include: comments
+                - match: '\s*({{name}})\s+({{type}})\s*'
+                  captures:
+                    1: variable.parameter
+                    2: storage.type
+                - match: '\s*(\))\s+'
+                  captures:
+                    1: punctuation.definition.end
+                  set:
+                    - include: comments
+                    - match: '\s*({{type}})'
+                      captures:
+                        1: storage.type
+                      pop: true
+    - match: '^(<<<)\s+'
+      captures:
+        1: punctuation.definition.begin
+      push: Packages/JavaScript/JavaScript.sublime-syntax
+      with_prototype:
+        - match: '^(<<<)'
+          scope: punctuation.definition.end
+          set: main
   singletons:
     - match: '^(:{{name}}) {{type}}(?=\n)'
       captures:

@@ -34,12 +34,12 @@
         )
     )
 
-~Store~
+|> Store
     loading bool
     failed Error
     success basic:StoreSuccess
 
-:StoreSuccess:
+&> StoreSuccess
     user basic:User
     location basic:Location
 
@@ -49,7 +49,7 @@
     return document.getElementById(id);
 <<<
 
-.DropId. num
+@> DropId num
 
 /> drop (ids [basic:DropId] hassle bool) _
     @ ids id i
@@ -62,7 +62,7 @@
     < dict:set(paces paces id id pace pace)
 
 #> largPrim num
-    < (* 19 849 2029)
+    < {* 19 849 2029}
 
 #> myArray [num]
     = a [num](1 2 48 3 92 03 3 4 2 1 2 3 405 392 203 40)
