@@ -1,52 +1,37 @@
-> SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
+! SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
 
->>> getElement (id str) dom:HTMLElement
-> <- punctuation.definition.keyword
- > <- punctuation.definition.keyword
-  > <- punctuation.definition.keyword
->   ^^^^^^^^^^ entity.name.function
->              ^ punctuation.definition.begin
->               ^^ variable.parameter
->                  ^^^ storage.type
->                     ^ punctuation.definition.end
->                       ^^^^^^^^^^^^^^^ storage.type
-<<<
-// <- punctuation.definition.begin
- // <- punctuation.definition.begin
-  // <- punctuation.definition.begin
+: getElement (id str < dom:HTMLElement)
+// <- punctuation.definition.keyword
+//^^^^^^^^^^ entity.name.function
+//           ^ punctuation.definition.begin
+//            ^^ variable.parameter
+//               ^^^ storage.type
+//                     ^^^^^^^^^^^^^^^ storage.type
+//                  ^ punctuation.definition.end
     if (id == null) return undefined;
  // ^^ keyword.control.conditional
     return document.getElementById(id);
-<<<
-> <- punctuation.definition.end
- > <- punctuation.definition.end
-  > <- punctuation.definition.end
+;;
+! <- punctuation.definition.end
+ ! <- punctuation.definition.end
 
->>> element
-> <- punctuation.definition.keyword
- > <- punctuation.definition.keyword
-  > <- punctuation.definition.keyword
->   ^^^^^^^ entity.name.function
+: element
+! <- punctuation.definition.keyword
+! ^^^^^^^ entity.name.function
 (
-> <- punctuation.definition.begin
+! <- punctuation.definition.begin
     element dom:Element
->   ^^^^^^^ variable.parameter
->           ^^^^^^^^^^^ storage.type
+!   ^^^^^^^ variable.parameter
+!           ^^^^^^^^^^^ storage.type
     eventName dom:EventName
->   ^^^^^^^^^ variable.parameter
->             ^^^^^^^^^^^^^ storage.type
+!   ^^^^^^^^^ variable.parameter
+!             ^^^^^^^^^^^^^ storage.type
     handler <event:Event>
->   ^^^^^^^ variable.parameter
->           ^^^^^^^^^^^^^ storage.type
-) _
-> <- punctuation.definition.end
-> ^ storage.type
-<<<
-// <- punctuation.definition.begin
- // <- punctuation.definition.begin
-  // <- punctuation.definition.begin
+!   ^^^^^^^ variable.parameter
+!           ^^^^^^^^^^^^^ storage.type
+)
+// <- punctuation.definition.end
     element.addEventListener(eventName, handler)
-<<<
-> <- punctuation.definition.end
- > <- punctuation.definition.end
-  > <- punctuation.definition.end
+;;
+! <- punctuation.definition.end
+ ! <- punctuation.definition.end

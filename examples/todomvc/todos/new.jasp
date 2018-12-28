@@ -1,30 +1,30 @@
-/> new () _
-    > Take the description from the input
+/ new ()
+    ! Take the description from the input
     = description dom:getValue(element todos:inputElement)
     ? [== '' description]
         < _
 
-    > Clear out the input element
+    ! Clear out the input element
     . dom:setValue(element todos:inputElement value '')
 
-    > Add the new todo item's elements
+    ! Add the new todo item's elements
     = liElement dom:create(tag dom:liTag)
     = viewElement dom:create(tag dom:divTag)
     = toggleElement dom:create(tag dom:inputTag)
     = labelElement dom:create(tag dom:labelTag)
     = buttonElement dom:create(tag dom:buttonTag)
-    . dom:addClass(element viewElement class %view)
-    . dom:addClass(element toggleElement class %toggle)
+    . dom:addClass(element viewElement class #view)
+    . dom:addClass(element toggleElement class #toggle)
     . dom:setType(element toggleElement type dom:checkboxType)
     . dom:setText(element labelElement text description)
-    . dom:addClass(element buttonElement class %destroy)
+    . dom:addClass(element buttonElement class #destroy)
     . dom:appendChild(parent viewElement child toggleElement)
     . dom:appendChild(parent viewElement child labelElement)
     . dom:appendChild(parent viewElement child buttonElement)
     . dom:appendChild(parent liElement child viewElement)
     . dom:appendChild(parent todos:listElement child liElement)
 
-    > Create a todo item 
+    ! Create a todo item 
     = task todos:Task(
         completed false
         visible true
@@ -32,10 +32,10 @@
         toggleElement toggleElement
     )
 
-    > Update the singleton tasks array
+    ! Update the singleton tasks array
     . array:push(array todos:tasks member task)
 
-    > Add event handlers
+    ! Add event handlers
     . dom:elementOn(
         element toggleElement
         eventName dom:clickEvent
@@ -54,5 +54,5 @@
     . todos:destroyOnClick(task task)
 
   % toggleEvent destroyEvent
-    . console:log('All done!')
+    . console:log(. 'All done!')
 

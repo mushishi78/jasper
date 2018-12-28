@@ -1,5 +1,5 @@
-/> onload () _
-    > Attach global event handlers
+/ onload ()
+    ! Attach global event handlers
     . dom:elementOn(
         element todos:inputElement
         eventName event:keyPress

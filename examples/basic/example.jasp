@@ -1,23 +1,23 @@
-> This is a comment
+! This is a comment
 
-/> fib (n num) num
-    ? [- [== n 0] [== n -1]]
+/ fib (. num < num)
+    ? [~ [== n 0] [== n -1]]
         < 0
     ? [== n 1]
         < 1
     < {+
         n
-        fib(n {- n 1})
-        fib(n {- n 2})
+        fib(. {- n 1})
+        fib(. {- n 2})
     }
 
-/> onload () _
-    . log:info(msg 'Initializing store {fib(n 12)}')
+/ onload ()
+    . log:info(. 'Initializing store {fib(. 12)}')
     = store basic:Store(loading true)
 
     = james 6
 
-    . log:info(msg 'Render react nodes {{* james 8}}')
+    . log:info(. 'Render react nodes {{* james 8}}')
 
     = store basic:Store(
         success basic:StoreSuccess(
@@ -34,45 +34,47 @@
         )
     )
 
-|> Store
+| Store (
     loading bool
     failed Error
     success basic:StoreSuccess
+)
 
-&> StoreSuccess
+& StoreSuccess (
     user basic:User
     location basic:Location
+)
 
->>> getElement (id str) dom:HTMLElement
-<<<
+: getElement (id str < dom:HTMLElement)
     if (id == null) return undefined;
     return document.getElementById(id);
-<<<
+;;
 
-@> DropId num
++ DropId num
 
-/> drop (ids [basic:DropId] hassle bool) _
+/ drop (ids [basic:DropId] hassle bool)
     @ ids id i
-        . log:info(msg id)
+        . log:info(. id)
     @ 10 i
         ? hassle
-            . log:info(msg i)
+            . log:info(. i)
 
-/> setPace (paces {bool} id basic:DropId pace bool) {bool}
-    < dict:set(paces paces id id pace pace)
+/ setPace (
+    paces {bool}
+    id basic:DropId
+    pace bool
+    < {bool}
+)
+    < {bool}(.. paces #id pace)
 
-#> largPrim num
+$ largPrim num
     < {* 19 849 2029}
 
-#> myArray [num]
-    = a [num](1 2 48 3 92 03 3 4 2 1 2 3 405 392 203 40)
+$ myArray [num]
+    = a [num](. 1 . 2 . 48 . 3 . 92 . 03 . 3 . 4 . 2 . 1 . 2 . 3 . 405 . 392 . 203 . 40)
     @ a n i
-        = a[i] {* n 44}
+        = a [num](.. a #i {* n 44})
     < a
 
-/> shift (array [`T] member `T) [`T]
-    = a [`T](member)
-    @ array m2 i
-        = i2 {+ i 1}
-        = a[i2] m2
-    < a
+/ shift (array [`T] member `T < [`T])
+    < [`T](. member .. array)

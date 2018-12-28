@@ -7,7 +7,7 @@ variables:
   name: \w+
   namespace: '\w+\:'
   objects: \w+\.
-  identifier: '{{namespace}})?({{objects}})*({{name}})\??'
+  identifier: '{{namespace}})?({{objects}})*({{name}})'
   indent: '    '
   type:
     '(?x)
@@ -26,114 +26,93 @@ contexts:
     - include: comments
 
     - include: function_definition
+    - include: parameter_list
     - include: type_definition
     - include: ffi_definition
     - include: singletons
 
-    - include: function_statement
+    - include: invoke
     - include: conditional_branches
     - include: control_flow
     - include: loops
     - include: assignment
 
   comments:
-    - match: '^\s*(?=> )'
-      push:
-        - match: '> '
-          scope: comment.line.jasp
-          set:
-            - meta_scope: comment.line.jasp
-            - match: '(?=\n)'
-              pop: true
+    - match: '^\s*(!.*)'
+      captures:
+        1: comment.line.jasp
+
+  parameter_pairs:
+    - match: '({{name}}|\.|\.\.|\<)\s+({{type}})'
+      captures:
+        1: variable.parameter
+        2: storage.type
 
 ## Top level
 ##############################################################
 
+  parameter_list:
+    - match: (\()
+      captures:
+        1: punctuation.definition.begin
+      push:
+        - include: comments
+        - include: parameter_pairs
+        - match: (\))
+          captures:
+            1: punctuation.definition.end
+          pop: true
+
   function_definition:
-    - match: '^(/>)\s+({{name}})\s+(\()'
+    - match: '^(/)\s+({{name}})\s+'
       captures:
         1: punctuation.definition.keyword
         2: entity.name.function
-        3: punctuation.definition.begin
-      push:
-        - include: comments
-        - match: '({{name}})\s+({{type}})'
-          captures:
-            1: variable.parameter
-            2: storage.type
-        - match: '(\))\s+({{type}})'
-          captures:
-            1: punctuation.definition.end
-            2: storage.type
-          pop: true
 
   type_definition:
-    - match: '^([\|&]>)\s+({{name}})'
+    - match: '^([\|&])\s+({{name}})'
       captures:
         1: punctuation.definition.keyword
         2: entity.name.function.constructor
-      push:
-        - include: comments
-        - match: '^{{indent}}({{name}})\s+({{type}})'
-          captures:
-            1: variable.parameter
-            2: storage.type
-        - match: ^(?!{{indent}})
-          pop: true
-    - match: '^(@>)\s+({{name}})\s+({{type}})'
+    - match: '^(\+)\s+({{name}})\s+({{type}})'
       captures:
         1: punctuation.definition.keyword
         2: entity.name.function.constructor
         3: storage.type
 
   ffi_definition:
-    - match: '^(>>>)\s+'
+    - match: '^(:)\s+({{name}})'
       captures:
         1: punctuation.definition.keyword
-      set:
+        2: entity.name.function
+      push:
         - include: comments
-        - match: '\s*({{name}})\s+'
+        - match: (\()
           captures:
-            1: entity.name.function
-          set:
+            1: punctuation.definition.begin
+          push:
             - include: comments
-            - match: '(\()\s*'
+            - include: parameter_pairs
+            - match: (\))
               captures:
-                1: punctuation.definition.begin
-              set:
-                - include: comments
-                - match: '\s*({{name}})\s+({{type}})\s*'
-                  captures:
-                    1: variable.parameter
-                    2: storage.type
-                - match: '\s*(\))\s+'
-                  captures:
-                    1: punctuation.definition.end
-                  set:
-                    - include: comments
-                    - match: '\s*({{type}})'
-                      captures:
-                        1: storage.type
-                      pop: true
-    - match: '^(<<<)\s+'
-      captures:
-        1: punctuation.definition.begin
-      push: Packages/JavaScript/JavaScript.sublime-syntax
-      with_prototype:
-        - match: '^(<<<)'
-          scope: punctuation.definition.end
-          set: main
+                1: punctuation.definition.end            
+              set: Packages/JavaScript/JavaScript.sublime-syntax
+              with_prototype:
+                - match: ';;'
+                  scope: punctuation.definition.end
+                  set: main
   singletons:
-    - match: '^(:{{name}}) {{type}}(?=\n)'
+    - match: '^(\$)\s+({{name}})\s+({{type}})'
       captures:
-        1: entity.name.function
-        2: storage.type
+        1: punctuation.definition.keyword
+        2: entity.name.function
+        3: storage.type
 
 ## Statements
 ##############################################################
 
-  function_statement:
-    - match: '^\t+(do) ({{namespace}})?({{objects}})*({{name}})(\()'
+  invoke:
+    - match: '\s+(\.) ({{namespace}})?({{objects}})*({{name}})(\()'
       captures:
         1: keyword.control.flow
         2: entity.name.namespace
@@ -142,7 +121,7 @@ contexts:
         5: punctuation.separator
       push:
         - include: comments
-        - match: '({{name}}) '
+        - match: '({{name}}|\.|\.\.) '
           captures:
             1: variable.parameter
           push: expression
@@ -151,10 +130,10 @@ contexts:
           pop: true
 
   conditional_branches:
-    - match: '^\t+(if|elif) '
+    - match: '^\s+(\:?\?) '
       scope: keyword.control.conditional
       push: expression
-    - match: '^\t+else$'
+    - match: '^\s+:\s+'
       scope: keyword.control.conditional
 
   control_flow:

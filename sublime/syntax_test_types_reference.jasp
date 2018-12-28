@@ -1,18 +1,39 @@
-> SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
+! SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
 
-/> a () num
->       ^^^ storage.type
-    < 45
+@ a num
+!   ^^^ storage.type
+@ a [num]
+!   ^^^^^ storage.type
+@ a {num}
+!   ^^^^^ storage.type
+@ a <num>
+!   ^^^^^ storage.type
+@ a {[num]}
+!   ^^^^^^^ storage.type
+@ a <[num]>
+!   ^^^^^^^ storage.type
+@ a [<num>]
+!   ^^^^^^^ storage.type
+@ a <{num}>
+!   ^^^^^^^ storage.type
+@ a {<num>}
+!   ^^^^^^^ storage.type
 
-/> a () [num]
->       ^^^^^ storage.type
-    < [num](45)
-
-/> a () {num}
->       ^^^^^ storage.type
-    < {num}(gah 45)
-
-/> a () {[num]}
->       ^^^^^^^ storage.type
-    < {[num]}(gah (45))
-
+@ a adb:NoStx
+!   ^^^^^^^^^ storage.type
+@ a [adb:NoStx]
+!   ^^^^^^^^^^^ storage.type
+@ a {adb:NoStx}
+!   ^^^^^^^^^^^ storage.type
+@ a <adb:NoStx>
+!   ^^^^^^^^^^^ storage.type
+@ a {[adb:NoStx]}
+!   ^^^^^^^^^^^^^ storage.type
+@ a <[adb:NoStx]>
+!   ^^^^^^^^^^^^^ storage.type
+@ a [<adb:NoStx>]
+!   ^^^^^^^^^^^^^ storage.type
+@ a <{adb:NoStx}>
+!   ^^^^^^^^^^^^^ storage.type
+@ a {<adb:NoStx>}
+!   ^^^^^^^^^^^^^ storage.type

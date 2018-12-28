@@ -1,46 +1,48 @@
-> SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
+! SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
 
-> Root level comment
-> <- comment.line
- > <- comment.line
-> ^^^^^^^^^^^^^^^^^^ comment.line
+! Root level comment
+! <- comment.line
+ ! <- comment.line
+! ^^^^^^^^^^^^^^^^^^ comment.line
 
-/> a () _
-    > Function level comment
->   ^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+/ a ()
+    ! Function level comment
+!   ^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
 	? [> 5 0]
-        > Control block comment
->       ^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+        ! Control block comment
+!       ^^^^^^^^^^^^^^^^^^^^^^^ comment.line
 		< 'Hi'
 	< 'Low'
 
 	. b(
-        > Argument level comment
->       ^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+        ! Argument level comment
+!       ^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
 		i 5
 		j 4
 	)
 
-/> b (
-    > Parameter level comment
->   ^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+/ b (
+    ! Parameter level comment
+!   ^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
 	i num
 	j num
-) num
+	< num
+)
 	< 5
 
->>> c (
-    > FFI parameter level comment
->   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+: c (
+    ! FFI parameter level comment
+!   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
 	i num
 	j num
-) num
-<<<
+	< num
+)
 	return 5
-<<<
+;;
 
-&> d
-    > Type definition comment
->   ^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
+& d (
+    ! Type definition comment
+!   ^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
     i num
     j num
+)

@@ -1,6 +1,3 @@
-@> Event _
++ Event _
 
-%% EventName
-    %blur
-    %click
-    %keyPress
+# EventName blur click keyPress #

@@ -1,0 +1,11 @@
+! SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
+
+$ matrix [[num]]
+! <- punctuation.definition.keyword
+! ^^^^^^ entity.name.function
+!        ^^^^^^^ storage.type
+    < [[num]](
+    	. [num](. 7 . 9 .. i)
+    	. [num](. 6 . 5 .. j)
+    	. [num](. 9 . 3 .. k)
+    )

@@ -1,0 +1,7 @@
+! SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
+
+/ count (x num)
+    ? [> x 5]
+    	< 5
+    :
+    	< 26

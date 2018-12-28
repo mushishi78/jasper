@@ -1,43 +1,43 @@
-/> update () _
-    > Main and footer visibility
+/ update ()
+    ! Main and footer visibility
     ? [> todos:tasks.length 0]
-        . dom:removeClass(element todos:mainElement class %hidden)
-        . dom:removeClass(element todos:footerElement class %hidden)
+        . dom:removeClass(element todos:mainElement class #hidden)
+        . dom:removeClass(element todos:footerElement class #hidden)
     :
-        . dom:addClass(element todos:mainElement class %hidden)
-        . dom:addClass(element todos:footerElement class %hidden)
+        . dom:addClass(element todos:mainElement class #hidden)
+        . dom:addClass(element todos:footerElement class #hidden)
 
-    > ToggleAll checkbox checked
+    ! ToggleAll checkbox checked
     . dom:setChecked(
         element todos:toggleAllInputElement
         checked [== todos:completedCount todos:tasks.length]
     )
     
-    > Items left count
+    ! Items left count
     = left {- todos:tasks.length todos:completedCount}
     . dom:setText(
         element todos:leftCountElement
         text '{left} items left'
     )
 
-    > ClearCompleted button visibility
+    ! ClearCompleted button visibility
     ? [> todos:completedCount 0]
-        . dom:removeClass(element todos:mainElement class %hidden)
+        . dom:removeClass(element todos:mainElement class #hidden)
     :
-        . dom:addClass(element todos:mainElement class %hidden)
+        . dom:addClass(element todos:mainElement class #hidden)
 
-    > Apply the filter
+    ! Apply the filter
     @ todos:tasks task		 
-        ! exhaustion todos:Filter %none %completed %notCompleted
+        ~ exhaustion todos:Filter #none #completed #notCompleted
 
         ? [~
-            [& %none [! task.visible]]
-            [& %completed [== task.completed task.visible]]
-            [& %notCompleted [!= tasks.completed task.visible]]
+            [& [== todos:filter #none] [! task.visible]]
+            [& [== todos:filter #completed] [== task.completed task.visible]]
+            [& [== todos:filter #notCompleted] [!= tasks.completed task.visible]]
         ]
             ? task.visible
-                . dom:removeClass(element task.liElement class %hidden)
+                . dom:removeClass(element task.liElement class #hidden)
             else
-                . dom:addClass(element task.liElement class %hidden)
+                . dom:addClass(element task.liElement class #hidden)
 
             = task.visible [! task.visible]

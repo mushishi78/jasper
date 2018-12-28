@@ -1,7 +1,8 @@
-%Filter%
-    %none
-    %completed
-    %notCompleted
+# Filter
+    none
+    completed
+    notCompleted
+#
 
-#> filter todos:Filter
-    < %none
+$ filter todos:Filter
+    < #none

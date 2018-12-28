@@ -1,4 +1,4 @@
-/> main () num
+/ main (< num)
     = a 'Hello {{* 4 6}} motto'
     = b {+ 4.3 4 {* 5 7 67}}
     = c [~ jam sjdd true]
@@ -34,3 +34,4 @@
         }
         {** vc {- 0 1}}
     }
+    < 0

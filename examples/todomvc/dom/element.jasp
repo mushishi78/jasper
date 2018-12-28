@@ -1,31 +1,26 @@
-@> Element _
++ Element _
 
->>> elementGet (id str) dom:Element
-<<<
+: elementGet (id str < dom:Element)
     return document.getElementById(id)
-<<<
+;;
 
->>> elementOn
+: elementOn
 (
     element dom:Element
     eventName dom:EventName
     handler <event:Event>
-) _
-<<<
+)
     element.addEventListener(eventName, handler)
-<<<
+;;
 
->>> addClass (element dom:Element class dom:Class) _
-<<<
+: addClass (element dom:Element class dom:Class)
     element.classList.add(class)
-<<<
+;;
 
->>> removeClass (element dom:Element class dom:Class) _
-<<<
+: removeClass (element dom:Element class dom:Class)
     element.classList.remove(class)
-<<<
+;;
 
->>> setChecked (element dom:Element checked bool) _
-<<<
+: setChecked (element dom:Element checked bool)
     element.checked = checked;
-<<<
+;;

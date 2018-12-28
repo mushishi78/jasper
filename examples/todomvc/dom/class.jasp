@@ -1,7 +1,8 @@
-%Class%
-    %completed
-    %destroy
-    %hidden
-    %selected
-    %toggle
-    %view
+# Class
+    completed
+    destroy
+    hidden
+    selected
+    toggle
+    view
+#
