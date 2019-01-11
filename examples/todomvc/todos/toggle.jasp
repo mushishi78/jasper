@@ -1,12 +1,12 @@
-/ toggle (task todos:Task)
+(toggle task todos:Task)
     = completed [! task.completed]
 
     ! Update the list elements
     ? completed
-        . dom:addClass(element task.liElement class #completed)
+        . (dom:addClass element task.liElement class #completed)
     :
-        . dom:removeClass(element task.liElement class #completed)
-    . dom:setChecked(element task.toggleElement checked completed)
+        . (dom:removeClass element task.liElement class #completed)
+    . (dom:setChecked element task.toggleElement checked completed)
     = task.completed completed
 
     ! Update the count

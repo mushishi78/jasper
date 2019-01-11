@@ -1,12 +1,12 @@
-& Task (
+& Task
     completed bool
     visible bool
     liElement dom:Element
     toggleElement dom:Element
-)
+&
 
 $ tasks [todos:Task]
-    < [todos:Task]()
+    < ([todos:Task])
 
 $ completedCount num
     < 0

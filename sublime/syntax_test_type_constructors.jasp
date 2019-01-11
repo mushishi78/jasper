@@ -1,7 +1,7 @@
 ! SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
 
-& RoiDividend (
-! <- punctuation.definition.keyword
+& RoiDividend
+! <- punctuation.definition.begin
 ! ^^^^^^^^^^^ entity.name.function.constructor
     interest num
 !   ^^^^^^^^ variable.parameter
@@ -9,10 +9,11 @@
     name [str]
 !   ^^^^ variable.parameter
 !        ^^^^^ storage.type
-)
+&
+! <- punctuation.definition.end
 
-| InvestmentState (
-! <- punctuation.definition.keyword
+| InvestmentState
+! <- punctuation.definition.begin
 ! ^^^^^^^^^^^^^^^ entity.name.function.constructor
     passing InvestmentPassing
 !   ^^^^^^^ variable.parameter
@@ -20,9 +21,24 @@
     failing InvestmentFailing
 !   ^^^^^^^ variable.parameter
 !           ^^^^^^^^^^^^^^^^^ storage.type
-)
+|
+! <- punctuation.definition.end
 
 + InvestmentID str
 ! <- punctuation.definition.keyword
 ! ^^^^^^^^^^^^ entity.name.function.constructor
 !              ^^^ storage.type
+
+# Status
+! <- punctuation.definition.begin
+! ^^^^^^ entity.name.function.constructor
+	ready
+!   ^^^^^ variable.parameter
+	loading
+!   ^^^^^^^ variable.parameter
+	success
+!   ^^^^^^^ variable.parameter
+	failed
+!   ^^^^^^ variable.parameter
+#
+! <- punctuation.definition.end

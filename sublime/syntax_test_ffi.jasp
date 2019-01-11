@@ -1,13 +1,15 @@
 ! SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
 
-: getElement (id str < dom:HTMLElement)
-// <- punctuation.definition.keyword
-//^^^^^^^^^^ entity.name.function
-//           ^ punctuation.definition.begin
-//            ^^ variable.parameter
-//               ^^^ storage.type
-//                     ^^^^^^^^^^^^^^^ storage.type
-//                  ^ punctuation.definition.end
+function (getElement id str < dom:HTMLElement)
+// <- keyword
+ // <- keyword
+//^^^^^^ keyword
+//       ^ punctuation.definition.begin
+//        ^^^^^^^^^^ entity.name.function
+//                   ^^ variable.parameter
+//                      ^^^ storage.type
+//                            ^^^^^^^^^^^^^^^ storage.type
+//                                           ^ punctuation.definition.end
     if (id == null) return undefined;
  // ^^ keyword.control.conditional
     return document.getElementById(id);
@@ -15,11 +17,12 @@
 ! <- punctuation.definition.end
  ! <- punctuation.definition.end
 
-: element
-! <- punctuation.definition.keyword
-! ^^^^^^^ entity.name.function
-(
-! <- punctuation.definition.begin
+function (element
+! <- keyword
+ ! <- keyword
+! ^^^^^^ keyword
+!        ^ punctuation.definition.begin
+!         ^^^^^^^ entity.name.function
     element dom:Element
 !   ^^^^^^^ variable.parameter
 !           ^^^^^^^^^^^ storage.type

@@ -1,29 +1,29 @@
 ! SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
 
-/ onStart ()
-    . jump(limit 7)
+(onStart)
+    . (jump limit 7)
 !   ^ keyword.control
-	! ^^^^ entity.name.function
-	!     ^ punctuation.definition.begin
-	!      ^^^^^ variable.parameter
-	!            ^ constant.numeric.integer
-	!             ^ punctuation.definition.end
-    . pacman:controller.eat(. 'ghost' . 'ghost' . 'cherry')
+	! ^ punctuation.definition.begin
+	!  ^^^^ entity.name.function
+	!       ^^^^^ variable.parameter
+	!             ^ constant.numeric.integer
+	!              ^ punctuation.definition.end
+    . (pacman:controller.eat . 'ghost' . 'ghost' . 'cherry')
 !   ^ keyword.control
-    ! ^^^^^^^ entity.name.namespace
-    !        ^^^^^^^^^^^ variable.other
-    !                   ^^^ entity.name.function
-	!                      ^ punctuation.definition.begin
-	!                       ^ variable.parameter
-	!                         ^ punctuation.definition.string.begin
-	!                          ^^^^^ string.quoted.double
-	!                               ^ punctuation.definition.string.end
-	!                                 ^ variable.parameter
-	!                                   ^ punctuation.definition.string.begin
-	!                                    ^^^^^ string.quoted.double
-	!                                         ^ punctuation.definition.string.end
-	!                                           ^ variable.parameter
-	!                                             ^ punctuation.definition.string.begin
-	!                                              ^^^^^^ string.quoted.double
-	!                                                    ^ punctuation.definition.string.end
-	!                                                      ^ punctuation.definition.end
+	! ^ punctuation.definition.begin
+    !  ^^^^^^^ entity.name.namespace
+    !         ^^^^^^^^^^^ variable.other
+    !                    ^^^ entity.name.function
+	!                        ^ variable.parameter
+	!                          ^ punctuation.definition.string.begin
+	!                           ^^^^^ string.quoted.double
+	!                                ^ punctuation.definition.string.end
+	!                                  ^ variable.parameter
+	!                                    ^ punctuation.definition.string.begin
+	!                                     ^^^^^ string.quoted.double
+	!                                          ^ punctuation.definition.string.end
+	!                                            ^ variable.parameter
+	!                                              ^ punctuation.definition.string.begin
+	!                                               ^^^^^^ string.quoted.double
+	!                                                     ^ punctuation.definition.string.end
+	!                                                       ^ punctuation.definition.end

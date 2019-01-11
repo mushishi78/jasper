@@ -1,7 +1,9 @@
 ! SYNTAX TEST "Packages/Jasper/Jasper.sublime-syntax"
 
-/ count (x num)
+(count x num)
     ? [> x 5]
+!   ^ keyword
     	< 5
     :
+!   ^ keyword
     	< 26

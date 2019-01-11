@@ -1,37 +1,37 @@
-/ onload ()
+(onload)
     ! Attach global event handlers
-    . dom:elementOn(
+    . (dom:elementOn
         element todos:inputElement
-        eventName event:keyPress
+        eventName #keyPress
         handler todos:inputOnKeyPress
     )
-    . dom:elementOn(
+    . (dom:elementOn
         element todos:inputElement
-        eventName event:blur
+        eventName #blur
         handler todos:inputOnBlur
     )
-    . dom:elementOn(
+    . (dom:elementOn
         element todos:toggleAllLabelElement
-        eventName event:click
+        eventName #click
         handler todos:toggleAllOnClick
     )
-    . dom:elementOn(
+    . (dom:elementOn
         element todos:filterAllElement
-        eventName event:click
+        eventName #click
         handler todos:filterAllOnClick
     )
-    . dom:elementOn(
+    . (dom:elementOn
         element todos:filterActiveElement
-        eventName event:click
+        eventName #click
         handler todos:filterActiveOnClick
     )
-    . dom:elementOn(
+    . (dom:elementOn
         element todos:filterCompletedElement
-        eventName event:click
+        eventName #click
         handler todos:filterCompletedOnClick
     )
-    . dom:elementOn(
+    . (dom:elementOn
         element todos:clearCompletedElement
-        eventName event:click
+        eventName #click
         handler todos:clearCompletedOnClick
     )

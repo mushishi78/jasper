@@ -1,11 +1,10 @@
 + Element _
 
-: elementGet (id str < dom:Element)
+function (elementGet id str < dom:Element)
     return document.getElementById(id)
 ;;
 
-: elementOn
-(
+function (elementOn
     element dom:Element
     eventName dom:EventName
     handler <event:Event>
@@ -13,14 +12,14 @@
     element.addEventListener(eventName, handler)
 ;;
 
-: addClass (element dom:Element class dom:Class)
+function (addClass element dom:Element class dom:Class)
     element.classList.add(class)
 ;;
 
-: removeClass (element dom:Element class dom:Class)
+function (removeClass element dom:Element class dom:Class)
     element.classList.remove(class)
 ;;
 
-: setChecked (element dom:Element checked bool)
+function (setChecked element dom:Element checked bool)
     element.checked = checked;
 ;;

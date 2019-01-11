@@ -15,7 +15,7 @@ variables:
       (?<array> \[ \g<type> \] ){0}
       (?<dictionary> \{ \g<type> \} ){0}
       (?<callback> < \g<type> > ){0}
-      (?<identifier> ({{identifier}}){0}
+      (?<identifier> ({{identifier}}|\`{{name}}){0}
     (?-x)'
 
 ## References
@@ -26,7 +26,6 @@ contexts:
     - include: comments
 
     - include: function_definition
-    - include: parameter_list
     - include: type_definition
     - include: ffi_definition
     - include: singletons
@@ -42,65 +41,93 @@ contexts:
       captures:
         1: comment.line.jasp
 
-  parameter_pairs:
-    - match: '({{name}}|\.|\.\.|\<)\s+({{type}})'
-      captures:
-        1: variable.parameter
-        2: storage.type
-
 ## Top level
 ##############################################################
 
-  parameter_list:
-    - match: (\()
+  function_definition:
+    - match: '^(\()({{name}})'
       captures:
         1: punctuation.definition.begin
+        2: entity.name.function
       push:
         - include: comments
-        - include: parameter_pairs
+        - match: '({{name}}|\.|\.\.|\<)\s+({{type}})'
+          captures:
+            1: variable.parameter
+            2: storage.type
         - match: (\))
           captures:
             1: punctuation.definition.end
           pop: true
 
-  function_definition:
-    - match: '^(/)\s+({{name}})\s+'
-      captures:
-        1: punctuation.definition.keyword
-        2: entity.name.function
-
   type_definition:
-    - match: '^([\|&])\s+({{name}})'
+    - match: '^(\|)\s+({{name}})'
       captures:
         1: punctuation.definition.keyword
         2: entity.name.function.constructor
+      push:
+        - include: comments
+        - match: '({{name}})\s+({{type}})'
+          captures:
+            1: variable.parameter
+            2: storage.type
+        - match: (\|)
+          captures:
+            1: punctuation.definition.end
+          pop: true
+    - match: '^(&)\s+({{name}})'
+      captures:
+        1: punctuation.definition.keyword
+        2: entity.name.function.constructor
+      push:
+        - include: comments
+        - match: '({{name}})\s+({{type}})'
+          captures:
+            1: variable.parameter
+            2: storage.type
+        - match: (&)
+          captures:
+            1: punctuation.definition.end
+          pop: true
     - match: '^(\+)\s+({{name}})\s+({{type}})'
       captures:
         1: punctuation.definition.keyword
         2: entity.name.function.constructor
         3: storage.type
-
-  ffi_definition:
-    - match: '^(:)\s+({{name}})'
+    - match: '^(#)\s+({{name}})'
       captures:
         1: punctuation.definition.keyword
-        2: entity.name.function
+        2: entity.name.function.constructor
       push:
         - include: comments
-        - match: (\()
+        - match: '({{name}})'
           captures:
-            1: punctuation.definition.begin
-          push:
-            - include: comments
-            - include: parameter_pairs
-            - match: (\))
-              captures:
-                1: punctuation.definition.end            
-              set: Packages/JavaScript/JavaScript.sublime-syntax
-              with_prototype:
-                - match: ';;'
-                  scope: punctuation.definition.end
-                  set: main
+            1: variable.parameter
+        - match: (#)
+          captures:
+            1: punctuation.definition.end
+          pop: true
+
+  ffi_definition:
+    - match: '^(function)\s+(\()({{name}})'
+      captures:
+        1: storage.type.keyword.function
+        2: punctuation.definition.begin
+        3: entity.name.function
+      push:
+        - include: comments
+        - match: '({{name}}|\.|\.\.|\<)\s+({{type}})'
+          captures:
+            1: variable.parameter
+            2: storage.type
+        - match: (\))
+          captures:
+            1: punctuation.definition.end            
+          set: Packages/JavaScript/JavaScript.sublime-syntax
+          with_prototype:
+            - match: ';;'
+              scope: punctuation.definition.end
+              set: main
   singletons:
     - match: '^(\$)\s+({{name}})\s+({{type}})'
       captures:
@@ -112,13 +139,13 @@ contexts:
 ##############################################################
 
   invoke:
-    - match: '\s+(\.) ({{namespace}})?({{objects}})*({{name}})(\()'
+    - match: '\s+(\.) (\()({{namespace}})?({{objects}})*({{name}})'
       captures:
         1: keyword.control.flow
-        2: entity.name.namespace
-        3: variable.other
-        4: entity.name.function
-        5: punctuation.separator
+        2: punctuation.separator
+        3: entity.name.namespace
+        4: variable.other
+        5: entity.name.function
       push:
         - include: comments
         - match: '({{name}}|\.|\.\.) '
@@ -137,25 +164,25 @@ contexts:
       scope: keyword.control.conditional
 
   control_flow:
-    - match: '^\t+(break|continue)$'
+    - match: '(@\^|@;)'
       scope: keyword.control.flow
-    - match: '^\t+<<$'
+    - match: '<$'
       scope: keyword.control.flow
-    - match: '^\t+<< '
+    - match: '< '
       scope: keyword.control.flow
       push: expression
 
   loops:
-    - match: '^\t+(loop) (\d+)\s({{name}})'
+    - match: '(@) (\d+) ({{name}})'
       captures:
         1: keyword.control.conditional
         2: constant.numeric.integer
         3: variable.parameter
-    - match: '^\t+(loop) (\d+)'
+    - match: '(@) (\d+)'
       captures:
         1: keyword.control.conditional
         2: constant.numeric.integer
-    - match: '^\t+(loop) ({{namespace}})?({{objects}})*({{name}}) ({{name}}) ({{name}})'
+    - match: '(@) ({{namespace}})?({{objects}})*({{name}}) ({{name}}) ({{name}})'
       captures:
         1: keyword.control.conditional
         2: entity.name.namespace
@@ -163,7 +190,7 @@ contexts:
         4: variable
         5: variable.parameter
         6: variable.parameter
-    - match: '^\t+(loop) ({{namespace}})?({{objects}})*({{name}}) ({{name}})'
+    - match: '(@) ({{namespace}})?({{objects}})*({{name}}) ({{name}})'
       captures:
         1: keyword.control.conditional
         2: entity.name.namespace
@@ -172,7 +199,7 @@ contexts:
         5: variable.parameter
 
   assignment:
-    - match: '^\t+(>>) ({{namespace}})?({{objects}})*({{name}}) '
+    - match: '(=) ({{namespace}})?({{objects}})*({{name}}) '
       captures:
         1: keyword.operator.assignment
         2: entity.name.namespace
@@ -191,42 +218,48 @@ contexts:
     - include: number
     - include: boolean
     - include: void
+    - include: hash
     - include: identifier
 
   s_expressions:
-    - match: '(\()(_|some|all|none|==|!=|>=|>|<=|<)(?=\s)'
+    - match: '(\[)(!|~|&|==|!=|>=|>|<=|<)(?=\s)'
       captures:
         1: punctuation.begin
         2: keyword.operator.logical
       set:
-        - match: \s+
-          push: expression
-        - match: \)
+        - match: \]
           scope: punctuation.end
           pop: true
-    - match: '(\()(/|\*\*|\*|\+|\%|-)(?=\s)'
+        - match: (?=\S)
+          push: expression
+    - match: '(\{)(/|\*\*|\*|\+|\%|-)(?=\s)'
       captures:
         1: punctuation.begin
         2: keyword.operator.arithmetic
       set:
-        - match: \s+
-          push: expression
-        - match: \)
+        - match: \}
           scope: punctuation.end
           pop: true
+        - match: (?=\S)
+          push: expression
 
   function_invocation:
-    - match: '({{namespace}})?({{objects}})*({{name}})(\()'
+    - match: '(\()({{namespace}})?({{objects}})*({{name}}|{{type}})'
       captures:
-        1: entity.name.namespace
-        2: variable.other
-        3: entity.name.function
-        4: punctuation.separator
+        1: punctuation.separator
+        2: entity.name.namespace
+        3: variable.other
+        4: entity.name.function
       set:
         - include: comments
-        - match: '({{name}}) '
+        - match: '({{name}}|\.|\.\.) '
           captures:
             1: variable.parameter
+          push: expression
+        - match: '(\#)({{name}}) '
+          captures:
+            1: punctuation.definition.keyword
+            2: variable
           push: expression
         - match: '\)'
           scope: punctuation.definition.end
@@ -267,6 +300,13 @@ contexts:
   void:
     - match: '_'
       scope: constant.lanuage
+      pop: true
+
+  hash:
+    - match: '(#)({{name}})'
+      captures:
+        1: punctuation.definition.keyword
+        2: variable
       pop: true
 
   identifier:

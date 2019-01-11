@@ -5,25 +5,26 @@ Types are nominitive, exclusive, and validated at runtime.
 ## What they look like
 
 ```
-.Circle &
+& Circle
 	position Coordinates
 	radius Length
+&
 
-.Coordinates &
+& Coordinates
 	x num
 	y num
+&
 
-.Length |
+| Length
 	meters Meters
 	feet Feet
+|
 
-.Meters num
-.Feet num
++ Meters num
++ Feet num
 ```
 
 Here there 5 types: `Circle`, `Coordinates`, `Length`, `Meters`, and `Feet`
-
-Each definition starts with the `.` operator, followed by their name.
 
 Type definitions only found on the root level of a file.
 They are always named, never definied in situ.
@@ -34,7 +35,7 @@ Type definition come in 3 variaties: Product, Sum and Alias
 
 `Circle` and `Coordinates` are "Product" types.
 
-This is denoted by the `&` operator that follows the type name.
+This is denoted by the `&` operator that preceeds the type name.
 
 Product types are made up of "properties": name and type pairs that when combined
 form the whole type. Properties are not optional, they must all be provided.
@@ -46,7 +47,7 @@ A `Coordinates` must have an `x` and a `y`.
 
 `Length` type is a "Sum" types.
 
-This is denoted by the `|` operator that follows the type name.
+This is denoted by the `|` operator that preceeds the type name.
 
 Sum types are made up of "options": name and type pairs which never co-exist.
 One and only one option may be provided.
@@ -57,8 +58,8 @@ A `Length` must be either be made up of `meters` or `feet`, but never both.
 
 `Meters` and `Feet` are "Alias" types.
 
-Alias types are denoted by following the type name with the name of the
-type they alias. In this case they are both aliases of the `num` type.
+Alias types are denoted by the `+` operator and are followed by the type name
+of the type they alias. In this case they are both aliases of the `num` type.
 
 Alias types can use the operators and methods of the type they alias.
 For instance, two value of type `Meters` can be multiplied together like

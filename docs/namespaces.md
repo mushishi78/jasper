@@ -10,14 +10,14 @@ For example, if there's a file named `shapes/Circle.jasp` and it contains the
 following:
 
 ```
-.Circle
+& Circle
 	radius num
 	x num
 	y num
+&
 
-@circleArea(circle shapes:Circle)num
-	<< circle.radius * circle.radius * math:pi
-
+(circleArea circle shapes:Circle < num)
+	< {* circle.radius circle.radius math:pi}
 ```
 
 Then the type `Circle` and the function `circleArea` would be referred to as

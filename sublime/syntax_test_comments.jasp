@@ -5,7 +5,7 @@
  ! <- comment.line
 ! ^^^^^^^^^^^^^^^^^^ comment.line
 
-/ a ()
+(a)
     ! Function level comment
 !   ^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
 	? [> 5 0]
@@ -14,14 +14,14 @@
 		< 'Hi'
 	< 'Low'
 
-	. b(
+	. (b
         ! Argument level comment
 !       ^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
 		i 5
 		j 4
 	)
 
-/ b (
+(b
     ! Parameter level comment
 !   ^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
 	i num
@@ -30,7 +30,7 @@
 )
 	< 5
 
-: c (
+function (c
     ! FFI parameter level comment
 !   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
 	i num
@@ -40,9 +40,9 @@
 	return 5
 ;;
 
-& d (
+& d
     ! Type definition comment
 !   ^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line
     i num
     j num
-)
+&
