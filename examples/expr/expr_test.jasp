@@ -1,0 +1,14 @@
+test 'x is 5'
+    = ast (expr:parse input 'x is 5')
+    . (test:assert
+        actual (expr:evaluate ~ast parameters ({str} x '5'))
+        expected true
+    )
+    . (test:assert
+        actual (expr:evaluate ~ast parameters ({str} x '10'))
+        expected false
+    )
+    . (test:assert
+        actual (expr:evaluate ~ast parameters ({str} y '5'))
+        expected false
+    )

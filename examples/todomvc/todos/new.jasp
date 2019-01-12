@@ -1,7 +1,7 @@
 (new) 
     ! Take the description from the input
     = description (dom:getValue element todos:inputElement)
-    ? [== '' description]
+    ? [= '' description]
         < _
 
     ! Clear out the input element

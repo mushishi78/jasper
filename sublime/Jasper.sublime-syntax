@@ -222,7 +222,7 @@ contexts:
     - include: identifier
 
   s_expressions:
-    - match: '(\[)(!|~|&|==|!=|>=|>|<=|<)(?=\s)'
+    - match: '(\[)(!|~|&|=|!=|>=|>|<=|<)(?=\s)'
       captures:
         1: punctuation.begin
         2: keyword.operator.logical
@@ -252,6 +252,9 @@ contexts:
         4: entity.name.function
       set:
         - include: comments
+        - match: '(~{{name}})'
+          captures:
+            1: variable.parameter
         - match: '({{name}}|\.|\.\.) '
           captures:
             1: variable.parameter

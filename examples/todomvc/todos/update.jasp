@@ -10,7 +10,7 @@
     ! ToggleAll checkbox checked
     . (dom:setChecked
         element todos:toggleAllInputElement
-        checked [== todos:completedCount todos:tasks.length]
+        checked [= todos:completedCount todos:tasks.length]
     )
     
     ! Items left count
@@ -31,9 +31,9 @@
         ~ exhaustion todos:Filter #none #completed #notCompleted
 
         ? [~
-            [& [== todos:filter #none] [! task.visible]]
-            [& [== todos:filter #completed] [== task.completed task.visible]]
-            [& [== todos:filter #notCompleted] [!= tasks.completed task.visible]]
+            [& [= todos:filter #none] [! task.visible]]
+            [& [= todos:filter #completed] [= task.completed task.visible]]
+            [& [= todos:filter #notCompleted] [!= tasks.completed task.visible]]
         ]
             ? task.visible
                 . (dom:removeClass element task.liElement class #hidden)
