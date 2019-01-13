@@ -1,0 +1,43 @@
+& DetailPage
+    props Post:DetailPageProps
+    state Post:DetailPageState
+    setState <Post:DetailPageSetState>
+    componentDidMount <Post:DetailPageDidMount>
+    render <Post:DetailPageRender>
+&
+
+& DetailPageProps
+    postId Post:PostId
+&
+
+& DetailPageState
+    comments [Post:Comment]
+    commentBoxIsFocused bool
+&
+
+(DetailPageNew props Post:DetailPageProps)
+    < (Post:DetailPage
+        ~props
+        state (Post:DetailPageState comments ([Post:Comment]) commentBoxIsFocused false)
+        componentDidMount Post:DetailPageDidMount
+        render Post:DetailPageRender
+    )
+
+(DetailPageSetState state Post:DetailPageState)
+
+(DetailPageDidMount this Post:DetailPage)
+    . (Post:commentsFetch postId this.props.postId comments <comments>)
+  % comments
+    . (this.setState state (Post:DetailPageState .. this.state ~comments))
+
+(DetailPageRender this Post:DetailPage < React:Element)
+    < (React:div class 'DetailPage'
+        . (React:div class 'DetailPage_header' onClick Rout:back)
+        . (React:div class 'DetailPage_comments'
+            . (this.state.comments.map fn Post:DetailPageRenderComment))
+    )
+
+(DetailPageRenderComment .comment Post:Comment < React:Element)
+    < (React:div class 'DetailPage_comment' key comment.id
+        . comment.text
+    )
