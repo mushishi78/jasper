@@ -10,15 +10,13 @@
     ! ToggleAll checkbox checked
     . (dom:setChecked
         element todos:toggleAllInputElement
-        checked (= todos:completedCount todos:tasks.length)
-    )
+        checked (= todos:completedCount todos:tasks.length))
     
     ! Items left count
     = left (- todos:tasks.length todos:completedCount)
     . (dom:setText
         element todos:leftCountElement
-        text '{left} items left'
-    )
+        text '{left} items left')
 
     ! ClearCompleted button visibility
     ? (> todos:completedCount 0)

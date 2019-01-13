@@ -7,8 +7,7 @@
             (-
                 0
                 (* dX (sin . B) (cos . L))
-                (* dY (sin . L))
-            )
+                (* dY (sin . L)))
             (* dZ (cos . B))
             (*
                 Da
@@ -18,20 +17,13 @@
                             Rn
                             (** e 2)
                             (sin . B)
-                            (cos . B)
-                        )
-                        a
-                    )
-                    Df
-                )		
+                            (cos . B))
+                        a)
+                    Df)
                 (+
                     (* Rm (/ a b))
-                    (* Rn ba)
-                )
+                    (* Rn ba))
                 (sin . B)
-                (cos . B) 
-            )
-        )
-        (** vc (- 0 1))
-    )
+                (cos . B)))
+        (** vc (- 0 1)))
     < 0

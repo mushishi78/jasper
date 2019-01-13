@@ -28,8 +28,7 @@
         completed false
         visible true
         liElement liElement
-        toggleElement toggleElement
-    )
+        toggleElement toggleElement)
 
     ! Update the singleton tasks array
     . (array:push array todos:tasks . task)
@@ -38,13 +37,11 @@
     . (dom:elementOn
         element toggleElement
         eventName #click
-        handler <toggleEvent>
-    )
+        handler <toggleEvent>)
     . (dom:elementOn
         element buttonElement
         eventName #click
-        handler <destroyEvent>
-    )
+        handler <destroyEvent>)
 
   % toggleEvent
     . (todos:toggleOnClick task task)

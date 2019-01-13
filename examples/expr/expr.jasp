@@ -5,8 +5,7 @@ $ operators [str]
         . ' is more than '
         . ' is less than '
         . ' is not '
-        . ' is '
-    )
+        . ' is ')
 
 | ast
     branch expr:branch

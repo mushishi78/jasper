@@ -3,35 +3,28 @@
     . (dom:elementOn
         element todos:inputElement
         eventName #keyPress
-        handler todos:inputOnKeyPress
-    )
+        handler todos:inputOnKeyPress)
     . (dom:elementOn
         element todos:inputElement
         eventName #blur
-        handler todos:inputOnBlur
-    )
+        handler todos:inputOnBlur)
     . (dom:elementOn
         element todos:toggleAllLabelElement
         eventName #click
-        handler todos:toggleAllOnClick
-    )
+        handler todos:toggleAllOnClick)
     . (dom:elementOn
         element todos:filterAllElement
         eventName #click
-        handler todos:filterAllOnClick
-    )
+        handler todos:filterAllOnClick)
     . (dom:elementOn
         element todos:filterActiveElement
         eventName #click
-        handler todos:filterActiveOnClick
-    )
+        handler todos:filterActiveOnClick)
     . (dom:elementOn
         element todos:filterCompletedElement
         eventName #click
-        handler todos:filterCompletedOnClick
-    )
+        handler todos:filterCompletedOnClick)
     . (dom:elementOn
         element todos:clearCompletedElement
         eventName #click
-        handler todos:clearCompletedOnClick
-    )
+        handler todos:clearCompletedOnClick)

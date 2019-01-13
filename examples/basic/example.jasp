@@ -8,8 +8,7 @@
     < (+
         n
         (fib . (- n 1))
-        (fib . (- n 2))
-    )
+        (fib . (- n 2)))
 
 (onload)
     . (log:info . 'Initializing store {(fib . 12)}')
@@ -22,17 +21,13 @@
     = store (basic:Store
         success (basic:StoreSuccess
             user (basic:User name 'Harry')
-            location (basic:Location locationId 46)
-        )
-    )
+            location (basic:Location locationId 46)))
 
     . (React:render
         root (basic:getElement id 'react-root')
         nodes (basic:App
             props (basic:AppProps store store)
-            children _
-        )
-    )
+            children _))
 
 | Store
     loading bool
