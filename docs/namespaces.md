@@ -17,7 +17,7 @@ following:
 &
 
 (circleArea circle shapes:Circle < num)
-	< {* circle.radius circle.radius math:pi}
+	< (* circle.radius circle.radius math:pi)
 ```
 
 Then the type `Circle` and the function `circleArea` would be referred to as
