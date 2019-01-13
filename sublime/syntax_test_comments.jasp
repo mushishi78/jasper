@@ -37,8 +37,7 @@ function (c
 	j num
 	< num
 )
-	return 5
-;;
+	return 5;;
 
 & d
     ! Type definition comment

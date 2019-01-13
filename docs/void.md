@@ -32,12 +32,10 @@ then used by ffi functions:
 + HTMLElement _
 
 function (getElement id str < dom:HTMLElement)
-	return document.getElementById(id)
-;;
+	return document.getElementById(id);;
 
 function (setText element dom:HTMLElement text str)
-	element.textContent = text
-;;
+	element.textContent = text;;
 
 (onload)
 	= label (dom:getElement id 'my-label')

@@ -42,8 +42,7 @@
 
 function (getElement id str < dom:HTMLElement)
     if (id == null) return undefined;
-    return document.getElementById(id);
-;;
+    return document.getElementById(id);;
 
 + DropId num
 

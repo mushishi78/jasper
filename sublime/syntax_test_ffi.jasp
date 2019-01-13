@@ -12,10 +12,8 @@ function (getElement id str < dom:HTMLElement)
 //                                           ^ punctuation.definition.end
     if (id == null) return undefined;
  // ^^ keyword.control.conditional
-    return document.getElementById(id);
-;;
-! <- punctuation.definition.end
- ! <- punctuation.definition.end
+    return document.getElementById(id);;
+!                                     ^^ punctuation.definition.end
 
 function (element
 ! <- keyword
@@ -34,7 +32,5 @@ function (element
 !           ^^^^^^^^^^^^^ storage.type
 )
 // <- punctuation.definition.end
-    element.addEventListener(eventName, handler)
-;;
-! <- punctuation.definition.end
- ! <- punctuation.definition.end
+    element.addEventListener(eventName, handler);;
+!                                               ^^ punctuation.definition.end

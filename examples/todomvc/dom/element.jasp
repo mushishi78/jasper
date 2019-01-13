@@ -1,25 +1,20 @@
 + Element _
 
 function (elementGet id str < dom:Element)
-    return document.getElementById(id)
-;;
+    return document.getElementById(id);;
 
 function (elementOn
     element dom:Element
     eventName dom:EventName
     handler <event:Event>
 )
-    element.addEventListener(eventName, handler)
-;;
+    element.addEventListener(eventName, handler);;
 
 function (addClass element dom:Element class dom:Class)
-    element.classList.add(class)
-;;
+    element.classList.add(class);;
 
 function (removeClass element dom:Element class dom:Class)
-    element.classList.remove(class)
-;;
+    element.classList.remove(class);;
 
 function (setChecked element dom:Element checked bool)
-    element.checked = checked;
-;;
+    element.checked = checked;;
