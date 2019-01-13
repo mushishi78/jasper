@@ -1,6 +1,5 @@
 (inputOnKeyPress event event:Event)
-    ? [!= event.key 'Enter']
-        < _
+    ? (!= event.key 'Enter') < _
     . (todos:new)
     . (todos:update)
 
@@ -9,9 +8,9 @@
     . (todos:update)
 
 (toggleAllOnClick)
-    = completed [!= todos:completedCount todos:tasks.length]
+    = completed (!= todos:completedCount todos:tasks.length)
     @ todos:tasks task
-        ? [!= task.completed completed]
+        ? (!= task.completed completed)
             . (todos:taskToggle task task)
     . (todos:update)
 
@@ -23,7 +22,7 @@
     . (array:remove array todos:tasks . task)
     . (dom:remove element task.liElement)
     ? task.completed
-        = todos:completedCount {- todos:completedCount 1}
+        = todos:completedCount (- todos:completedCount 1)
     . (todos:update)
 
 (filterAllOnClick)
@@ -49,9 +48,8 @@
 
 (clearCompletedOnClick)
     @ todos:tasks task
-        ? [! task.completed]
-            @^
+        ? (! task.completed) @^
         . (array:remove array todos:tasks . todo)
         . (dom:remove element task.liElement)
-        = todos:completedCount {- todos:completedCount 1}
+        = todos:completedCount (- todos:completedCount 1)
     . (todos:update)

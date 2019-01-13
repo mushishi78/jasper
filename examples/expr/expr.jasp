@@ -22,28 +22,28 @@ $ operators [str]
 (parse input str < expr:ast)
     @ operators operator
         = index (str:indexOf string input substring operator)
-        ? [= index -1] @^
+        ? (= index -1) @^
         = left (expr:parse input (str:slice from 0 to index))
         = right (expr:parse input (str:slice from {+ index operator.length} to str.length))
         < (expr:ast branch (expr:branch ~operator ~left ~right))
     < (expr:ast leaf input)
 
 (evaluate ast expr:ast args {string} < bool)
-    ? [!= ast.branch _]
+    ? (!= ast.branch _)
         = left (expr:evaluate ast ast.branch.left ~args)
         = right (expr:evaluate ast ast.branch.right ~args)
-        ? [= ast.type ' and ']
-            < [& left right]
-        ? [= ast.type ' or ']
-            < [~ left right]
-        ? [= ast.type ' is more than ']
-            < [> (str:parseFloat . left) (str:parseFloat . right)]
-        ? [= ast.type ' is less than ']
-            < [< (str:parseFloat . left) (str:parseFloat . right)]
-        ? [= ast.type ' is not ']
-            < [!= left right]
-        ? [= ast.type ' is ']
-            < [= left right]
-    ? [!= args[ast.leaf] _]
+        ? (= ast.type ' and ')
+            < (& left right)
+        ? (= ast.type ' or ')
+            < (~ left right)
+        ? (= ast.type ' is more than ')
+            < (> (str:parseFloat . left) (str:parseFloat . right))
+        ? (= ast.type ' is less than ')
+            < (< (str:parseFloat . left) (str:parseFloat . right))
+        ? (= ast.type ' is not ')
+            < (!= left right)
+        ? (= ast.type ' is ')
+            < (= left right)
+    ? (!= args[ast.leaf] _)
         < args[ast.leaf]
     < ast.value

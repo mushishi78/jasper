@@ -222,22 +222,22 @@ contexts:
     - include: identifier
 
   s_expressions:
-    - match: '(\[)(!|~|&|=|!=|>=|>|<=|<)(?=\s)'
+    - match: '(\()(!|~|&|=|!=|>=|>|<=|<)(?=\s)'
       captures:
         1: punctuation.begin
         2: keyword.operator.logical
       set:
-        - match: \]
+        - match: \)
           scope: punctuation.end
           pop: true
         - match: (?=\S)
           push: expression
-    - match: '(\{)(/|\*\*|\*|\+|\%|-)(?=\s)'
+    - match: '(\()(/|\*\*|\*|\+|\%|-)(?=\s)'
       captures:
         1: punctuation.begin
         2: keyword.operator.arithmetic
       set:
-        - match: \}
+        - match: \)
           scope: punctuation.end
           pop: true
         - match: (?=\S)

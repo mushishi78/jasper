@@ -1,5 +1,5 @@
 (toggle task todos:Task)
-    = completed [! task.completed]
+    = completed (! task.completed)
 
     ! Update the list elements
     ? completed
@@ -11,6 +11,6 @@
 
     ! Update the count
     ? completed
-        = todos:completedCount {+ todos:completedCount 1}
+        = todos:completedCount (+ todos:completedCount 1)
     :
-        = todos:completedCount {- todos:completedCount 1}
+        = todos:completedCount (- todos:completedCount 1)

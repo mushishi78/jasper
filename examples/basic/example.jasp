@@ -1,15 +1,15 @@
 ! This is a comment
 
 (fib . num < num)
-    ? [~ [= n 0] [= n -1]]
+    ? (~ (= n 0) (= n -1))
         < 0
-    ? [= n 1]
+    ? (= n 1)
         < 1
-    < {+
+    < (+
         n
-        (fib . {- n 1})
-        (fib . {- n 2})
-    }
+        (fib . (- n 1))
+        (fib . (- n 2))
+    )
 
 (onload)
     . (log:info . 'Initializing store {(fib . 12)}')
@@ -17,7 +17,7 @@
 
     = james 6
 
-    . (log:info . 'Render react nodes {{* james 8}}')
+    . (log:info . 'Render react nodes {(* james 8)}')
 
     = store (basic:Store
         success (basic:StoreSuccess
@@ -68,12 +68,12 @@ function (getElement id str < dom:HTMLElement)
     < ({bool} .. paces #id pace)
 
 $ largPrim num
-    < {* 19 849 2029}
+    < (* 19 849 2029)
 
 $ myArray [num]
     = a ([num] . 1 . 2 . 48 . 3 . 92 . 3 . 3 . 4 . 2 . 1 . 2 . 3 . 405 . 392 . 203 . 40)
     @ a n i
-        = a ([num] .. a #i {* n 44})
+        = a ([num] .. a #i (* n 44))
     < a
 
 (shift array [`T] member `T < [`T])
